@@ -22,7 +22,7 @@ function ClickCounter (){
       >
         Click for a cookie. 
       </button>
-      <h1 className= "text-4xl">You have {count} cookies!</h1>
+      <h1 className="text-4xl mt-4">You have {count} cookies!</h1>
     </div>
   );
 }
