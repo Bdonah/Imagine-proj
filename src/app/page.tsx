@@ -2,6 +2,6 @@
 
 export default function Home() {
   return (
-    <h1 className="text-2xl">Brendan Donahue</h1>
+    <h1 className="text-2xl"> Emagine Educational Project</h1>
   );
 }
