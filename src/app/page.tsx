@@ -6,6 +6,7 @@ export default function Home() {
     <>
     <h1 className="text-2xl"> Emagine Educational Project</h1>
     <ClickCounter />
+    
     </>
   );
 }
@@ -19,8 +20,9 @@ function ClickCounter (){
         className="w-44 h-44  bg-[#D2B48C] text-black rounded-full flex items-center justify-center shadow-md hover:bg-[#C2A178]"
         onClick={() => setCount(count + 1)}
       >
-        Click for a cookie. You have {count} cookies!
+        Click for a cookie. 
       </button>
+      <h1 className= "text-4xl">You have {count} cookies!</h1>
     </div>
   );
 }
