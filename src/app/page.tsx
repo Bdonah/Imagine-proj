@@ -16,7 +16,7 @@ function ClickCounter (){
   return (
     <div className="text-center mt-4">
       <button
-        className="w-32 h-32  bg-[#D2B48C] text-white rounded-full flex items-center justify-center shadow-md hover:bg-[#C2A178]"
+        className="w-44 h-44  bg-[#D2B48C] text-black rounded-full flex items-center justify-center shadow-md hover:bg-[#C2A178]"
         onClick={() => setCount(count + 1)}
       >
         Click for a cookie. You have {count} cookies!
