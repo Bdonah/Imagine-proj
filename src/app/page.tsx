@@ -16,10 +16,10 @@ function ClickCounter (){
   return (
     <div className="text-center mt-4">
       <button
-        className="px-4 py-2 bg-blue-500 text-white rounded"
+        className="w-16 h-16 bg-[#D2B48C] text-white rounded-full flex items-center justify-center shadow-md hover:bg-[#C2A178]"
         onClick={() => setCount(count + 1)}
       >
-        Clicked {count} times
+        Click for a cookie. You have {count} cookies!
       </button>
     </div>
   );
