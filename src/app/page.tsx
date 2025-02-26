@@ -47,7 +47,7 @@ export default function HomePage() {
       <div className="p-4 max-w-lg mx-auto">
         <h1 className="text-2xl font-bold mb-4">Chatbot</h1>
         <textarea
-          className="w-full p-2 border rounded"
+          className="w-full p-2 border rounded text-black-500"
           placeholder="Ask me something..."
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
