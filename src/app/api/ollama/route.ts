@@ -13,7 +13,7 @@ export async function POST(req: Request) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: "mistral", // or use your preferred model
+        model: "llama3", // or use your preferred model
         prompt: prompt,
         stream: false, // Disable streaming
       }),
