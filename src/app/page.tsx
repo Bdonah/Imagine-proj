@@ -8,32 +8,31 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
 
   const sendPrompt = async () => {
-    if (!prompt.trim()) return; // Validate the prompt
+    if (!prompt.trim()) return;
 
     setLoading(true);
     setResponse("");
 
     try {
-      // Send the prompt to the backend
+      console.log("✅ Sending Prompt to Backend:", prompt);
+
       const res = await fetch("http://localhost:3001/api/ollama", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt }), // Pass the user's prompt
+        body: JSON.stringify({ prompt }),
       });
 
       console.log("✅ Backend Response Status:", res.status);
 
-      // Handle errors from the backend
       if (!res.ok) {
         const errorText = await res.text();
+        console.error("❌ Backend Error:", errorText);
         throw new Error(`Server error: ${res.status} - ${errorText}`);
       }
 
-      // Parse the backend response
       const data = await res.json();
       console.log("✅ Backend Response Data:", data);
 
-      // Update the response state
       setResponse(data.response || "No response from AI");
     } catch (error) {
       console.error("❌ Fetch error:", error);
