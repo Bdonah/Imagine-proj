@@ -10,6 +10,7 @@ export async function POST(req: Request) {
 
     console.log("✅ Received Prompt:", prompt);
 
+    // Use the public URL for the Ollama API
     const ollamaResponse = await fetch("https://your-deployed-ollama-url/api/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -31,34 +32,9 @@ export async function POST(req: Request) {
     const data = await ollamaResponse.json();
     console.log("✅ Ollama API Response Data:", data);
 
-    // Add CORS headers to the response
-    return new NextResponse(JSON.stringify({ response: data.response }), {
-      headers: {
-        "Access-Control-Allow-Origin": "https://imagine-proj-ten.vercel.app", // Allow your frontend origin
-        "Access-Control-Allow-Methods": "POST, OPTIONS", // Allow POST and OPTIONS requests
-        "Access-Control-Allow-Headers": "Content-Type", // Allow Content-Type header
-      },
-    });
+    return NextResponse.json({ response: data.response });
   } catch (error) {
     console.error("❌ API Error:", error);
-    return new NextResponse(JSON.stringify({ error: "Failed to fetch response from Ollama" }), {
-      status: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "https://imagine-proj-ten.vercel.app", // Allow your frontend origin
-        "Access-Control-Allow-Methods": "POST, OPTIONS", // Allow POST and OPTIONS requests
-        "Access-Control-Allow-Headers": "Content-Type", // Allow Content-Type header
-      },
-    });
+    return NextResponse.json({ error: "Failed to fetch response from Ollama" }, { status: 500 });
   }
-}
-
-// Add this to handle OPTIONS requests (for CORS preflight)
-export async function OPTIONS() {
-  return new NextResponse(null, {
-    headers: {
-      "Access-Control-Allow-Origin": "https://imagine-proj-ten.vercel.app", // Allow your frontend origin
-      "Access-Control-Allow-Methods": "POST, OPTIONS", // Allow POST and OPTIONS requests
-      "Access-Control-Allow-Headers": "Content-Type", // Allow Content-Type header
-    },
-  });
 }
