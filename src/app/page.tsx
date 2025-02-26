@@ -14,7 +14,7 @@ export default function HomePage() {
     setResponse("");
 
     try {
-      const res = await fetch("/api/ollama", {
+      const res = await fetch("http://localhost:3001/api/ollama", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),
