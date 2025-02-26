@@ -1,33 +1,30 @@
-import { NextResponse } from 'next/server';
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
+    const { prompt } = await req.json();
 
-    if (!body.prompt) {
+    if (!prompt) {
       return NextResponse.json({ error: "Prompt is required" }, { status: 400 });
     }
 
-    console.log("✅ Received Prompt:", body.prompt);
+    console.log("✅ Received Prompt:", prompt);
 
-    const res = await fetch("http://localhost:11434/api/generate", {
+    const response = await fetch("http://127.0.0.1:11434/api/generate", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: "llama3",
-        prompt: body.prompt,
+        model: "llama3", 
+        prompt: prompt,
         stream: false,
       }),
     });
 
-    if (!res.ok) {
-      throw new Error(`Ollama API error: ${res.status} ${res.statusText}`);
+    if (!response.ok) {
+      throw new Error(`Ollama API error: ${response.status} ${response.statusText}`);
     }
 
-    const data = await res.json();
-
+    const data = await response.json();
     console.log("✅ Ollama API Response:", data);
 
     return NextResponse.json({ response: data.response });
