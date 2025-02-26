@@ -8,39 +8,30 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
 
   async function handleSend() {
-    if (!prompt) return;
-
+    if (!prompt.trim()) return;
+  
     setLoading(true);
     setResponse("");
-
+  
     try {
-      const res = await fetch("http://localhost:3001/api/ollama", {
+      const res = await fetch("http://localhost:3001/api/ollama", {  // Ensure this URL points to port 3001
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),
       });
-
-      if (!res.ok) throw new Error("Failed to fetch response");
-
-      // Handle streaming response
-      const reader = res.body?.getReader();
-      if (!reader) throw new Error("No reader available");
-
-      let result = "";
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        // Decode the chunk and append to the result
-        const chunk = new TextDecoder().decode(value);
-        result += chunk;
-        setResponse(result); // Update the response incrementally
+  
+      if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(`Server error: ${res.status} - ${errorText}`);
       }
+  
+      const data = await res.json();  // Regular JSON parsing
+      setResponse(data.response || "No response from AI");
     } catch (error) {
+      console.error("❌ Fetch error:", error);
       setResponse("Error fetching response");
-      console.error(error);
     }
-
+  
     setLoading(false);
   }
 
