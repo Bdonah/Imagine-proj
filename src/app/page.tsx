@@ -7,7 +7,7 @@ export default function Home() {
     <>
       <h1 className="text-2xl text-center">Emagine Educational Project</h1>
       <ClickCounter />
-      <OllamaChat />
+      <Chatbot /> {/* ✅ This renders the chatbot */}
     </>
   );
 }
@@ -28,7 +28,7 @@ function ClickCounter() {
   );
 }
 
-function OllamaChat() {
+function Chatbot() {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
@@ -49,23 +49,15 @@ function OllamaChat() {
         body: JSON.stringify({ prompt }),
       });
 
-      console.log("Frontend Response Status:", res.status); // ✅ Logs the response status
-
       if (!res.ok) {
         throw new Error(`Server error: ${res.status}`);
       }
 
       const data = await res.json();
-      console.log("Frontend Received API Response:", data); // ✅ Logs the API response in browser console
-
-      if (data.response) {
-        setResponse(data.response);
-      } else {
-        setResponse("⚠️ No response received from AI.");
-      }
+      setResponse(data.response || "⚠️ No response received.");
     } catch (error) {
-      console.error("Frontend Fetch Error:", error);
-      setResponse(`⚠️ Error: ${error instanceof Error ? error.message : "Unknown error"}`);
+      console.error("Fetch error:", error);
+      setResponse("⚠️ Failed to fetch response.");
     } finally {
       setLoading(false);
     }
@@ -87,9 +79,7 @@ function OllamaChat() {
       >
         {loading ? "Generating..." : "Send"}
       </button>
-      <div className="mt-4 p-2 border text-white">
-        {response}
-      </div>
+      <div className="mt-4 p-2 border text-white">{response}</div>
     </div>
   );
 }
