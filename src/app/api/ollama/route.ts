@@ -2,33 +2,44 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   try {
+    // Parse the request body to get the prompt
     const { prompt } = await req.json();
+
+    // Validate the prompt
     if (!prompt) {
       return NextResponse.json({ error: "Prompt is required" }, { status: 400 });
     }
 
     console.log("✅ Received Prompt:", prompt);
 
-    const response = await fetch("http://127.0.0.1:11434/api/generate", {
+    // Send the prompt to the Ollama API
+    const ollamaResponse = await fetch("http://localhost:11434/api/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: "llama3", // or use your preferred model
-        prompt: prompt,
-        stream: false, // Disable streaming
+        model: "llama3", // Use the correct model name
+        prompt: prompt,   // Pass the user's prompt
+        stream: false,    // Wait for the complete response
       }),
     });
 
-    if (!response.ok) {
-      throw new Error(`Ollama API error: ${response.status} ${response.statusText}`);
+    console.log("✅ Ollama API Response Status:", ollamaResponse.status);
+
+    // Handle errors from the Ollama API
+    if (!ollamaResponse.ok) {
+      const errorText = await ollamaResponse.text();
+      console.error("❌ Ollama API Error:", errorText);
+      throw new Error(`Ollama API error: ${ollamaResponse.status} ${ollamaResponse.statusText}`);
     }
 
-    const data = await response.json();
-    console.log("✅ Ollama API Response:", data);
+    // Parse the Ollama API response
+    const data = await ollamaResponse.json();
+    console.log("✅ Ollama API Response Data:", data);
 
+    // Return the response to the frontend
     return NextResponse.json({ response: data.response });
   } catch (error) {
     console.error("❌ API Error:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to fetch response from Ollama" }, { status: 500 });
   }
 }

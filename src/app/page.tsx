@@ -7,29 +7,33 @@ export default function HomePage() {
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function handleSend() {
-    if (!prompt.trim()) return;
+  const sendPrompt = async () => {
+    if (!prompt.trim()) return; // Validate the prompt
 
     setLoading(true);
     setResponse("");
 
     try {
+      // Send the prompt to the backend
       const res = await fetch("http://localhost:3001/api/ollama", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({ prompt }), // Pass the user's prompt
       });
 
       console.log("✅ Backend Response Status:", res.status);
 
+      // Handle errors from the backend
       if (!res.ok) {
         const errorText = await res.text();
         throw new Error(`Server error: ${res.status} - ${errorText}`);
       }
 
+      // Parse the backend response
       const data = await res.json();
       console.log("✅ Backend Response Data:", data);
 
+      // Update the response state
       setResponse(data.response || "No response from AI");
     } catch (error) {
       console.error("❌ Fetch error:", error);
@@ -37,7 +41,7 @@ export default function HomePage() {
     }
 
     setLoading(false);
-  }
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4">
@@ -50,7 +54,7 @@ export default function HomePage() {
           onChange={(e) => setPrompt(e.target.value)}
         />
         <button
-          onClick={handleSend}
+          onClick={sendPrompt}
           disabled={loading}
           className="mt-2 p-2 bg-blue-500 text-white rounded"
         >
