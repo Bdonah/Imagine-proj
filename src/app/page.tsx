@@ -16,7 +16,7 @@ export default function HomePage() {
     try {
       console.log("✅ Sending Prompt to Backend:", prompt);
 
-      const res = await fetch("/api/ollama", {
+      const res = await fetch("https://imagine-proj-ten.vercel.app/api/ollama", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),

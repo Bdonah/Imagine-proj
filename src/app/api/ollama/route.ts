@@ -31,9 +31,34 @@ export async function POST(req: Request) {
     const data = await ollamaResponse.json();
     console.log("✅ Ollama API Response Data:", data);
 
-    return NextResponse.json({ response: data.response });
+    // Add CORS headers to the response
+    return new NextResponse(JSON.stringify({ response: data.response }), {
+      headers: {
+        "Access-Control-Allow-Origin": "https://imagine-proj-ten.vercel.app", // Allow your frontend origin
+        "Access-Control-Allow-Methods": "POST, OPTIONS", // Allow POST and OPTIONS requests
+        "Access-Control-Allow-Headers": "Content-Type", // Allow Content-Type header
+      },
+    });
   } catch (error) {
     console.error("❌ API Error:", error);
-    return NextResponse.json({ error: "Failed to fetch response from Ollama" }, { status: 500 });
+    return new NextResponse(JSON.stringify({ error: "Failed to fetch response from Ollama" }), {
+      status: 500,
+      headers: {
+        "Access-Control-Allow-Origin": "https://imagine-proj-ten.vercel.app", // Allow your frontend origin
+        "Access-Control-Allow-Methods": "POST, OPTIONS", // Allow POST and OPTIONS requests
+        "Access-Control-Allow-Headers": "Content-Type", // Allow Content-Type header
+      },
+    });
   }
+}
+
+// Add this to handle OPTIONS requests (for CORS preflight)
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    headers: {
+      "Access-Control-Allow-Origin": "https://imagine-proj-ten.vercel.app", // Allow your frontend origin
+      "Access-Control-Allow-Methods": "POST, OPTIONS", // Allow POST and OPTIONS requests
+      "Access-Control-Allow-Headers": "Content-Type", // Allow Content-Type header
+    },
+  });
 }
