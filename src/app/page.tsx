@@ -7,7 +7,7 @@ export default function Home() {
     <>
       <h1 className="text-2xl text-center">Emagine Educational Project</h1>
       <ClickCounter />
-      <Chatbot /> {/* ✅ This renders the chatbot */}
+      <OllamaChat />
     </>
   );
 }
@@ -28,7 +28,7 @@ function ClickCounter() {
   );
 }
 
-function Chatbot() {
+function OllamaChat() {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
@@ -40,7 +40,7 @@ function Chatbot() {
     }
 
     setLoading(true);
-    setResponse("Generating response...");
+    setResponse("");
 
     try {
       const res = await fetch("/api/ollama", {
@@ -56,8 +56,11 @@ function Chatbot() {
       const data = await res.json();
       setResponse(data.response || "⚠️ No response received.");
     } catch (error) {
-      console.error("Fetch error:", error);
-      setResponse("⚠️ Failed to fetch response.");
+      if (error instanceof Error) {
+        setResponse(`⚠️ Error: ${error.message}`);
+      } else {
+        setResponse("⚠️ An unknown error occurred.");
+      }
     } finally {
       setLoading(false);
     }

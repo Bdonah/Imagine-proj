@@ -1,22 +1,38 @@
-export async function POST() {
-    try {
-      const res = await fetch("https://data.mongodb-api.com/...", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ time: new Date().toISOString() }),
-      });
-  
-      if (!res.ok) {
-        throw new Error(`MongoDB API error: ${res.status} ${res.statusText}`);
-      }
-  
-      const data = await res.json();
-  
-      return NextResponse.json(data);
-    } catch (error) {
-      console.error("API Error:", error);
-      return NextResponse.json({ error: "Failed" }, { status: 500 });
+import { NextResponse } from 'next/server';
+
+export async function POST(req) {
+  try {
+    const { prompt } = await req.json();
+
+    if (!prompt) {
+      return NextResponse.json({ error: "Prompt is required" }, { status: 400 });
     }
+
+    const res = await fetch("http://localhost:11434/api/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "llama3",  
+        prompt: prompt,
+        stream: false,
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error(`Ollama API error: ${res.status} ${res.statusText}`);
+    }
+
+    const data = await res.json();
+
+    if (!data || !data.response) {
+      throw new Error("Invalid response from Ollama");
+    }
+
+    return NextResponse.json({ response: data.response });
+  } catch (error) {
+    console.error("❌ API Error:", error);
+    return NextResponse.json({ error: "Failed to fetch response from Ollama" }, { status: 500 });
   }
+}
