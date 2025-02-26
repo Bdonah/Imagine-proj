@@ -10,7 +10,7 @@ export async function POST(req: Request) {
 
     console.log("✅ Received Prompt:", prompt);
 
-    const ollamaResponse = await fetch("http://localhost:11434/api/generate", {
+    const ollamaResponse = await fetch("https://your-deployed-ollama-url/api/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
