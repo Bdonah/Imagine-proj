@@ -14,7 +14,7 @@ export async function POST(req) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "llama3",  
+        model: "llama3",
         prompt: prompt,
         stream: false,
       }),
@@ -26,13 +26,11 @@ export async function POST(req) {
 
     const data = await res.json();
 
-    if (!data || !data.response) {
-      throw new Error("Invalid response from Ollama");
-    }
+    console.log("Ollama API Response:", data); // ✅ Logs API response in Next.js terminal
 
     return NextResponse.json({ response: data.response });
   } catch (error) {
     console.error("API Error:", error);
-    return NextResponse.json({ error: "Failed to fetch response from Ollama" }, { status: 500 });
+    return NextResponse.json({ error: "⚠️ Failed to fetch response from Ollama" }, { status: 500 });
   }
 }

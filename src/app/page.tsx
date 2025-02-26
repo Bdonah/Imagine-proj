@@ -40,7 +40,7 @@ function OllamaChat() {
     }
 
     setLoading(true);
-    setResponse("");
+    setResponse("Generating response...");
 
     try {
       const res = await fetch("/api/ollama", {
@@ -49,14 +49,23 @@ function OllamaChat() {
         body: JSON.stringify({ prompt }),
       });
 
-      const data = await res.json();
-      setResponse(data.response || "No response received.");
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        setResponse(`Error: ${error.message}`);
-      } else {
-        setResponse("An unknown error occurred.");
+      console.log("Frontend Response Status:", res.status); // ✅ Logs the response status
+
+      if (!res.ok) {
+        throw new Error(`Server error: ${res.status}`);
       }
+
+      const data = await res.json();
+      console.log("Frontend Received API Response:", data); // ✅ Logs the API response in browser console
+
+      if (data.response) {
+        setResponse(data.response);
+      } else {
+        setResponse("⚠️ No response received from AI.");
+      }
+    } catch (error) {
+      console.error("Frontend Fetch Error:", error);
+      setResponse(`⚠️ Error: ${error instanceof Error ? error.message : "Unknown error"}`);
     } finally {
       setLoading(false);
     }
@@ -64,7 +73,7 @@ function OllamaChat() {
 
   return (
     <div className="p-4 text-center">
-      <h2 className="text-xl mt-6 text-white">AI Chatbot</h2> {/* Make title visible */}
+      <h2 className="text-xl mt-6 text-white">AI Chatbot</h2>
       <textarea
         className="border p-2 w-full h-32 bg-white text-black rounded-md"
         value={prompt}
@@ -79,7 +88,7 @@ function OllamaChat() {
         {loading ? "Generating..." : "Send"}
       </button>
       <div className="mt-4 p-2 border text-white">
-        {loading ? "Loading..." : response}
+        {response}
       </div>
     </div>
   );
