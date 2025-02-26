@@ -7,6 +7,9 @@ export default function HomePage() {
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Use environment variable to set API URL
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api/ollama";  // Fallback to /api/ollama for local development
+
   const sendPrompt = async () => {
     if (!prompt.trim()) return; // Don't send empty prompts
 
@@ -17,7 +20,7 @@ export default function HomePage() {
       console.log("✅ Sending Prompt to Backend:", prompt);
 
       // Send the prompt to the backend API
-      const res = await fetch("/api/ollama", {
+      const res = await fetch(apiUrl, {  // This will use NEXT_PUBLIC_API_URL if set, else fallback to /api/ollama
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),
