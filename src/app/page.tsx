@@ -9,29 +9,33 @@ export default function HomePage() {
 
   async function handleSend() {
     if (!prompt.trim()) return;
-  
+
     setLoading(true);
     setResponse("");
-  
+
     try {
-      const res = await fetch("http://localhost:3001/api/ollama", {  // Ensure this URL points to port 3001
+      const res = await fetch("http://localhost:3001/api/ollama", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),
       });
-  
+
+      console.log("✅ Backend Response Status:", res.status);
+
       if (!res.ok) {
         const errorText = await res.text();
         throw new Error(`Server error: ${res.status} - ${errorText}`);
       }
-  
-      const data = await res.json();  // Regular JSON parsing
+
+      const data = await res.json();
+      console.log("✅ Backend Response Data:", data);
+
       setResponse(data.response || "No response from AI");
     } catch (error) {
       console.error("❌ Fetch error:", error);
       setResponse("Error fetching response");
     }
-  
+
     setLoading(false);
   }
 
