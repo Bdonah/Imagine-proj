@@ -18,7 +18,7 @@ export async function POST(req) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "llama2", // Replace this with the actual model you're using
+        model: "llama3", // Replace this with the actual model you're using
         prompt: prompt,
         stream: false, // Ensures we wait for the full response
       }),
