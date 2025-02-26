@@ -10,24 +10,24 @@ export async function POST(req: Request) {
 
     console.log("✅ Received Prompt:", prompt);
 
-    const response = await fetch("http://127.0.0.1:11434/api/generate", {
+    const ollamaResponse = await fetch("http://127.0.0.1:11434/api/generate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         model: "llama3", // Make sure it's installed
         prompt: prompt,
-        stream: false,
+        stream: true, // Enable streaming
       }),
     });
 
-    if (!response.ok) {
-      throw new Error(`Ollama API error: ${response.status} ${response.statusText}`);
+    if (!ollamaResponse.ok) {
+      throw new Error(`Ollama API error: ${ollamaResponse.status} ${ollamaResponse.statusText}`);
     }
 
-    const data = await response.json();
-    console.log("✅ Ollama API Response:", data);
-
-    return NextResponse.json({ response: data.response });
+    // Forward the streaming response to the frontend
+    return new Response(ollamaResponse.body, {
+      headers: { "Content-Type": "text/plain" },
+    });
   } catch (error) {
     console.error("❌ API Error:", error);
     return NextResponse.json({ error: "Failed to fetch response from Ollama" }, { status: 500 });

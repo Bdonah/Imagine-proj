@@ -22,8 +22,20 @@ export default function HomePage() {
 
       if (!res.ok) throw new Error("Failed to fetch response");
 
-      const data = await res.json();
-      setResponse(data.response);
+      // Handle streaming response
+      const reader = res.body?.getReader();
+      if (!reader) throw new Error("No reader available");
+
+      let result = "";
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        // Decode the chunk and append to the result
+        const chunk = new TextDecoder().decode(value);
+        result += chunk;
+        setResponse(result); // Update the response incrementally
+      }
     } catch (error) {
       setResponse("Error fetching response");
       console.error(error);
