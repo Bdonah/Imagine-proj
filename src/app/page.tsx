@@ -7,11 +7,10 @@ export default function HomePage() {
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // Use environment variable to set API URL
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api/ollama";  // Fallback to /api/ollama for local development
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api/ollama";  
 
   const sendPrompt = async () => {
-    if (!prompt.trim()) return; // Don't send empty prompts
+    if (!prompt.trim()) return; 
 
     setLoading(true);
     setResponse("");
@@ -19,8 +18,7 @@ export default function HomePage() {
     try {
       console.log("✅ Sending Prompt to Backend:", prompt);
 
-      // Send the prompt to the backend API
-      const res = await fetch(apiUrl, {  // This will use NEXT_PUBLIC_API_URL if set, else fallback to /api/ollama
+      const res = await fetch(apiUrl, {  
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),
@@ -28,18 +26,15 @@ export default function HomePage() {
 
       console.log("✅ Backend Response Status:", res.status);
 
-      // Handle errors from the backend
       if (!res.ok) {
         const errorText = await res.text();
         console.error("❌ Backend Error:", errorText);
         throw new Error(`Server error: ${res.status} - ${errorText}`);
       }
 
-      // Parse the response from the backend
       const data = await res.json();
       console.log("✅ Backend Response Data:", data);
 
-      // Update the response state
       setResponse(data.response || "No response from AI");
     } catch (error) {
       console.error("❌ Fetch error:", error);
