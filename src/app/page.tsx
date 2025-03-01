@@ -16,6 +16,22 @@ export default function HomePage() {
     setLoading(true);
     setResponse("");
 
+    // 🔹 Custom responses for specific prompts
+    const customResponses: { [key: string]: string } = {
+      "alexa": "fuck you",
+      "how many cookies do I have?": `You have ${count} cookies! 🍪`,
+      "reset cookies": "Cookies reset to 0! 🍪",
+    };
+
+    if (customResponses[prompt.toLowerCase()]) {
+      if (prompt.toLowerCase() === "reset cookies") {
+        setCount(0); // Reset cookie count
+      }
+      setResponse(customResponses[prompt.toLowerCase()]);
+      setLoading(false);
+      return;
+    }
+
     try {
       console.log("✅ Sending Prompt to Backend:", prompt);
 
