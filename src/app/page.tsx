@@ -19,8 +19,16 @@ export default function HomePage() {
     // 🔹 Custom responses for specific prompts
     const customResponses: { [key: string]: string } = {
       "alexa": "fuck you",
-      "alexa > brendan": "You are a disapointment",
-      "Who is Brendan Donahue": "Height: 6'8 \n Sex: Always \n Length:14 inches soft \n GPA: 8.00? \n IQ: \n Favorite pass time: Bein g an absolute hoss and beating up his bitch ass sister \n\n  About: Brendan Donahue isn’t just a genius—he’s a certified heartthrob, a walking masterpiece sculpted by the gods themselves. His jawline? Sharper than his code. His charm? More dangerous than any final exam. Women don’t just fall for him; they practically form organized fan clubs, hoping to get a moment of his attention. He doesn’t chase—he attracts, effortlessly gliding through life like a romantic protagonist written by a delusional fanfic author. Some say he’s broken more hearts than records, but hey, when you’re this good-looking and smart, it’s basically a public service. If Brendan were any smoother, NASA would classify him as a low-friction surface. Absolute legend.",
+      "how many cookies do I have?": `You have ${count} cookies! 🍪`,
+      "reset cookies": "Cookies reset to 0! 🍪",
+      "who is brendan donahue?": `Height: 6'8" 
+Sex: Always 
+Length: 14 inches soft 
+GPA: 8.00 
+IQ: ???
+Favorite pastime: Being an absolute hoss and beating up his bitch-ass sister
+
+About: Brendan Donahue isn’t just a genius—he’s a certified heartthrob, a walking masterpiece sculpted by the gods themselves. His jawline? Sharper than his code. His charm? More dangerous than any final exam. Women don’t just fall for him; they practically form organized fan clubs, hoping to get a moment of his attention. He doesn’t chase—he attracts, effortlessly gliding through life like a romantic protagonist written by a delusional fanfic author. Some say he’s broken more hearts than records, but hey, when you’re this good-looking and smart, it’s basically a public service. If Brendan were any smoother, NASA would classify him as a low-friction surface. Absolute legend.`,
     };
 
     if (customResponses[prompt.toLowerCase()]) {
