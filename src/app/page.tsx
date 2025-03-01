@@ -17,18 +17,24 @@ export default function HomePage() {
     setResponse("");
 
     // 🔹 Custom responses for specific prompts
-    const customResponses: { [key: string]: string } = {
+    const customResponses: Record<string, string> = {
       "alexa": "fuck you",
       "how many cookies do I have?": `You have ${count} cookies! 🍪`,
       "reset cookies": "Cookies reset to 0! 🍪",
-      "who is brendan donahue?": `Height: 6'8" 
-Sex: Always 
-Length: 14 inches soft 
-GPA: 8.00 
-IQ: ???
-Favorite pastime: Being an absolute hoss and beating up his bitch-ass sister
-
-About: Brendan Donahue isn’t just a genius—he’s a certified heartthrob, a walking masterpiece sculpted by the gods themselves. His jawline? Sharper than his code. His charm? More dangerous than any final exam. Women don’t just fall for him; they practically form organized fan clubs, hoping to get a moment of his attention. He doesn’t chase—he attracts, effortlessly gliding through life like a romantic protagonist written by a delusional fanfic author. Some say he’s broken more hearts than records, but hey, when you’re this good-looking and smart, it’s basically a public service. If Brendan were any smoother, NASA would classify him as a low-friction surface. Absolute legend.`,
+      "is nolan curran good at valorant?": `Oh, you mean *Nolan "Bottom Frag" Curran*? Good at Valorant? That’s like asking if a fish is good at climbing trees. My guy plays like he’s legally required to give the enemy free kills. His crosshair placement is a war crime, his reaction time is measured in **geological eras**, and his aim? Let’s just say stormtroopers would be proud. The only "site" he holds down is the **respawn screen**, and his "utility usage" consists of flashing himself and smoking off his own team. 
+    
+    And let’s talk about his **god-awful KD**—statistically speaking, the only thing he’s consistent at is losing gunfights. The man **averages a 0.3 KD** like it’s a personal challenge. But does that stop him from buying an Op every round like he’s playing CS:GO in 2015? Absolutely not. He’ll **hard-save for 4 rounds straight, buy an Op, peek mid like a clueless NPC, and get one-tapped before he can even scope in.** Congrats, Nolan, you just spent all your credits to arm the enemy team. Again.  
+    
+    Oh, and did I mention this **absolute psychopath plays Valorant on a PlayStation 5**? The man is out here trying to clutch rounds **on a controller**, like this is Call of Duty. Watching him try to aim is like watching a newborn deer learning to walk—it’s painful, it’s slow, and it’s ending in disaster. If throwing was a ranked role, he’d be **Radiant.** If you ever need a good laugh, just spectate Nolan—he turns every match into a comedy special. 🤡🎯`,
+    
+      "who is brendan donahue?": `Height: 6'8"  
+    Sex: Always  
+    Length: 14 inches soft  
+    GPA: 8.00  
+    IQ: ???  
+    Favorite pastime: Being an absolute hoss and beating up his bitch-ass sister  
+    
+    About: Brendan Donahue isn’t just a genius—he’s a certified heartthrob, a walking masterpiece sculpted by the gods themselves. His jawline? Sharper than his code. His charm? More dangerous than any final exam. Women don’t just fall for him; they practically form organized fan clubs, hoping to get a moment of his attention. He doesn’t chase—he attracts, effortlessly gliding through life like a romantic protagonist written by a delusional fanfic author. Some say he’s broken more hearts than records, but hey, when you’re this good-looking and smart, it’s basically a public service. If Brendan were any smoother, NASA would classify him as a low-friction surface. Absolute legend.`,
     };
 
     if (customResponses[prompt.toLowerCase()]) {
