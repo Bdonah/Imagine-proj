@@ -42,6 +42,11 @@ And nowhere is that gap more obvious than in **UFC.** Every time Aiden steps int
 
 And if Aiden **ever** even considers stepping out of line, he better **think twice**, because Brendan has **enough dirt on him to ruin his life permanently.** Brendan knows **all the skeletons in his closet**, every **fumble, every L, every cringeworthy moment**, and if Aiden ever disrespects him, Brendan will **bury him so deep that future archaeologists will have to carbon-date his remains.** Aiden should **know his place** and stick to **being a background character in the legend of Brendan Donahue.**
 `,
+  "tell me about gamer gals": `
+The **Gamer Gals**—a legendary brotherhood of **elite gamers**, forged through countless battles, tactical plays, and **absolute domination** in games like *Rainbow Six Siege*. When this squad pulls up, lobbies **tremble**, KD ratios **plummet**, and enemy teams **rage quit before halftime.** Brendan, Nolan, Aiden, Tanner, Chris, Colton, Takoda, Caiden, Matteo, and Mikey? **Certified gaming gods.** Their game sense is **flawless**, their aim **lethal**, and their teamwork **borderline telepathic**—a well-oiled machine capable of **turning any match into a massacre.** **Their callouts?** Precise. **Their clutches?** Inevitable. **Their rank?** Unstoppable.  
+
+But then… there's **AJ.** Hard-stuck **Copper IV**, the eternal weak link, the man who single-handedly drags the squad’s MMR into the **shadow realm.** While the rest of the **Gamer Gals** are out here **executing 5D chess strats**, AJ is **whiffing his entire mag**, getting spawn-peeked, and then blaming his controller drift. Every match is a **4v5 the second AJ loads in.** If ranks were **determined by sheer incompetence**, AJ would be **Radiant in failure.** No amount of coaching, YouTube guides, or *"guys I swear my headset wasn’t working"* excuses can save him. The **Gamer Gals** may be a squad of **demigods**, but AJ is out here **proving that not all men were created equal.**
+`,
   };
 
     if (customResponses[prompt.toLowerCase()]) {
