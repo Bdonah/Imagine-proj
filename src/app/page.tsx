@@ -6,11 +6,12 @@ export default function HomePage() {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
   const [loading, setLoading] = useState(false);
+  const [count, setCount] = useState(0); // State for cookie counter
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api/ollama";  
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "/api/ollama";
 
   const sendPrompt = async () => {
-    if (!prompt.trim()) return; 
+    if (!prompt.trim()) return;
 
     setLoading(true);
     setResponse("");
@@ -18,7 +19,7 @@ export default function HomePage() {
     try {
       console.log("✅ Sending Prompt to Backend:", prompt);
 
-      const res = await fetch(apiUrl, {  
+      const res = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),
@@ -46,7 +47,19 @@ export default function HomePage() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4">
-      <div className="p-4 max-w-lg mx-auto">
+      {/* Cookie Clicker Section */}
+      <div className="flex flex-col items-center text-center mt-4">
+        <button
+          className="w-44 h-44 bg-[#D2B48C] text-black text-3xl font-sans rounded-full flex items-center justify-center shadow-md hover:bg-[#C2A178]"
+          onClick={() => setCount(count + 1)}
+        >
+          Click for a cookie🍪
+        </button>
+        <h1 className="text-4xl mt-4">You have {count} cookies!</h1>
+      </div>
+
+      {/* Chatbot Section */}
+      <div className="p-4 max-w-lg mx-auto mt-8">
         <h1 className="text-2xl font-bold mb-4">Chatbot</h1>
         <textarea
           className="w-full p-2 border rounded text-black-500"
